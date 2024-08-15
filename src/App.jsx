@@ -10,6 +10,8 @@ function App() {
   const [users, setUsers] = useState([]);
   const [editingUserId, setEditingUserId] = useState(null);
 
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+
   const checkInput = () => {
     if (Name === '' || Description === '') {
       setError('Both Name and Description are required.');
@@ -30,7 +32,7 @@ function App() {
 
     if (editingUserId) {
       // Update user
-      axios.put(`${process.env.REACT_APP_SERVER_URL}/form/${editingUserId}`, payload)
+      axios.put(`${serverUrl}/form/${editingUserId}`, payload)
         .then(result => {
           console.log(result);
           fetchUsers();
@@ -39,7 +41,7 @@ function App() {
         .catch(err => console.log(err));
     } else {
       // Create new user
-      axios.post(`${process.env.REACT_APP_SERVER_URL}/form`, payload)
+      axios.post(`${serverUrl}/form`, payload)
         .then(result => {
           console.log(result);
           fetchUsers();
@@ -50,10 +52,16 @@ function App() {
   };
 
   const fetchUsers = () => {
-    axios.get(`${process.env.REACT_APP_SERVER_URL}/form`)
+    axios.get(`${serverUrl}/form`)
       .then(response => setUsers(response.data))
       .catch(err => console.log("Error Fetching Users", err));
   };
+
+
+axios.get(`${serverUrl}/form`)
+  .then(response => setUsers(response.data))
+  .catch(err => console.log("Error Fetching Users", err));
+
 
   const clearForm = () => {
     setName('');
@@ -68,7 +76,7 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`${process.env.REACT_APP_SERVER_URL}/form/${id}`)
+    axios.delete(`${serverUrl}/form/${id}`)
       .then(() => {
         fetchUsers();
       })
