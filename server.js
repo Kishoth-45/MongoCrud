@@ -42,6 +42,6 @@ app.delete('/form/:id',(req,res)=>{
      .catch(err => console.log(err))
 })
 
-app.listen(Port,()=>{
-    console.log(`server is running on ${Port}`)
+app.listen(PORT,()=>{
+    console.log(`server is running on ${PORT}`)
 })
