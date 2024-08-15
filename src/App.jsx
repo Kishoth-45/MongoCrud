@@ -30,7 +30,7 @@ function App() {
 
     if (editingUserId) {
       // Update user
-      axios.put(`http://localhost:3001/form/${editingUserId}`, payload)
+      axios.put(`${process.env.REACT_APP_SERVER_URL}/form/${editingUserId}`, payload)
         .then(result => {
           console.log(result);
           fetchUsers();
@@ -39,7 +39,7 @@ function App() {
         .catch(err => console.log(err));
     } else {
       // Create new user
-      axios.post('http://localhost:3001/form', payload)
+      axios.post(`${process.env.REACT_APP_SERVER_URL}/form`, payload)
         .then(result => {
           console.log(result);
           fetchUsers();
@@ -50,7 +50,7 @@ function App() {
   };
 
   const fetchUsers = () => {
-    axios.get('http://localhost:3001/form')
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/form`)
       .then(response => setUsers(response.data))
       .catch(err => console.log("Error Fetching Users", err));
   };
@@ -68,7 +68,7 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:3001/form/${id}`)
+    axios.delete(`${process.env.REACT_APP_SERVER_URL}/form/${id}`)
       .then(() => {
         fetchUsers();
       })
